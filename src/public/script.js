@@ -27,9 +27,10 @@ boutton.addEventListener("click", async () => {
     if (!reponse.ok) {
         message.textContent = "Echec du téléchargement";
         boutton.disabled = false;
-        lien.value = "";
+        return
     }
 
+    const fichier = await reponse.blob();
 
     // Le navigateur l'enregistre dans Téléchargements
     const a = document.createElement("a");
