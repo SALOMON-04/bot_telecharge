@@ -15,20 +15,33 @@ if (!lien || !boutton || !message) {
 boutton.addEventListener("click", async () => {
 
     message.textContent = "Téléchargement..."
-    
+    boutton.disabled = true;
+
     const reponse = await fetch("/download", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: lien.value }),
     });
 
-    
-    if (reponse.ok) {
-        message.textContent = "Terminé";
+
+    if (!reponse.ok) {
+        message.textContent = "Echec du téléchargement";
+        boutton.disabled = false;
         lien.value = "";
-    } else {
-        message.textContent = "Échec du téléchargement";
     }
+
+
+    // Le navigateur l'enregistre dans Téléchargements
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(fichier);
+    a.download = "video.mp4";
+    a.click();
+
+    // Seulement maintenant : c'est terminé
+    message.textContent = "Terminé";
+    lien.value = "";
+    boutton.disabled = false;
+
 });
 
 

@@ -1,19 +1,16 @@
-import { Controller, HttpCode, Post, HttpStatus, Body } from "@nestjs/common";
+import { Body, Controller, Post, Res } from "@nestjs/common";
 import { AllowAnonymous } from "@thallesp/nestjs-better-auth";
-import {DownloadService} from "./download.services.js"
-
-
-
+import type { Response } from "express";
+import { DownloadService } from "./download.services.js" ;
 
 @Controller("download")
 export class DownloadController {
+  constructor(private readonly downloadService: DownloadService) {}
 
-    constructor(private readonly downloadService: DownloadService) {}
-
-    @Post()
-    @AllowAnonymous()
-    @HttpCode(HttpStatus.CREATED)
-    creat(@Body("url") url: string){
-        return this.downloadService.telecharge(url)
-    }
+  @Post()
+  @AllowAnonymous()
+  create(@Body("url") url: string, @Res() res: Response) {
+    const chemin = this.downloadService.telecharge(url);
+    res.download(chemin); // envoie le fichier au navigateur
+  }
 }

@@ -1,21 +1,22 @@
 import { Injectable } from "@nestjs/common";
-import { spawn } from "node:child_process"
-import { homedir } from "node:os";
-import { join } from "node:path";
-
-
+import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
 
 @Injectable()
-
 export class DownloadService {
+  telecharge(url: string) {
+    // Lance yt-dlp et attend qu'il finisse
+    const resultat = execFileSync("yt-dlp", [
+      "--no-playlist",
+      "--js-runtimes", "node",
+      "-t", "mp4",
+      "-P", tmpdir(),
+      "--print", "after_move:filepath",
+      "--",
+      url,
+    ]);
 
-    telecharge(url: string) {
-        // Dossier Téléchargements de l'utilisateur, sans chemin écrit en dur
-        const dossier = join(homedir(), "Downloads");
-        const lien = spawn("yt-dlp", ["--no-playlist", "-P", dossier, "-o", "%(title)s.%(ext)s", "--", url], { stdio: "inherit" })
-        lien.on("error", (err) => console.log(err));
-
-        return "Telechargement"
-
-    }
+    // yt-dlp affiche le chemin du fichier : on le renvoie
+    return resultat.toString().trim();
+  }
 }
