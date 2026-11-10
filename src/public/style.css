@@ -1,0 +1,55 @@
+ body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: whitesmoke;
+      font-family: Arial, sans-serif;
+    }
+
+    .carte {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Le bouton devient plus foncé quand la souris passe dessus */
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #message {
+      margin-top: 16px;
+      color: #1e3a8a;
+    }

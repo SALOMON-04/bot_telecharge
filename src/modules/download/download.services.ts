@@ -1,14 +1,21 @@
 import { Injectable } from "@nestjs/common";
-import {spawn} from "node:child_process"
-// Le service est vide pour l'instant
+import { spawn } from "node:child_process"
+import { homedir } from "node:os";
+import { join } from "node:path";
+
+
+
 @Injectable()
+
 export class DownloadService {
 
     telecharge(url: string) {
-        const child = spawn("yt-dlp", ["--no-playlsit", "--", url])
+        // Dossier Téléchargements de l'utilisateur, sans chemin écrit en dur
+        const dossier = join(homedir(), "Downloads");
+        const lien = spawn("yt-dlp", ["--no-playlist", "-P", dossier, "-o", "%(title)s.%(ext)s", "--", url], { stdio: "inherit" })
+        lien.on("error", (err) => console.log(err));
 
-        child.on("error", () => console.log("telechargement impossible"));
-        
         return "Telechargement"
+
     }
 }
