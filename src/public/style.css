@@ -1,55 +1,77 @@
- body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: whitesmoke;
-      font-family: Arial, sans-serif;
-    }
+/* Les tailles incluent les marges : rien ne dépasse de la carte */
+* {
+  box-sizing: border-box;
+}
 
-    .carte {
-      background: white;
-      padding: 32px;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh; /* tient compte de la barre du navigateur sur téléphone */
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: whitesmoke;
+  font-family: Arial, sans-serif;
+}
 
-    h1 {
-      color: #2563eb;
-      margin-top: 0;
-    }
+.carte {
+  width: 100%;
+  max-width: 480px;
+  padding: clamp(20px, 5vw, 40px); /* marge qui grandit avec l'écran */
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #2563eb;
-      border-radius: 8px;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
+h1 {
+  margin-top: 0;
+  color: #2563eb;
+  font-size: clamp(1.5rem, 5vw, 2.2rem); /* le titre suit la taille de l'écran */
+}
 
-    button {
-      width: 100%;
-      margin-top: 12px;
-      padding: 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+input,
+button {
+  width: 100%;
+  min-height: 44px; /* assez grand pour un doigt */
+  padding: 12px;
+  font-size: 16px; /* évite le zoom automatique sur iPhone */
+  border-radius: 8px;
+}
 
-    /* Le bouton devient plus foncé quand la souris passe dessus */
-    button:hover {
-      background: #1d4ed8;
-    }
+input {
+  border: 2px solid #2563eb;
+}
 
-    #message {
-      margin-top: 16px;
-      color: #1e3a8a;
-    }
+button {
+  margin-top: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+#message {
+  margin-top: 16px;
+  color: #1e3a8a;
+  word-break: break-word; /* les longs messages passent à la ligne */
+}
+
+/* Grands écrans : carte un peu plus large */
+@media (min-width: 1024px) {
+  .carte {
+    max-width: 560px;
+  }
+}
+
+/* Téléphone en mode paysage : on aligne en haut pour ne rien couper */
+@media (max-height: 480px) {
+  body {
+    align-items: flex-start;
+  }
+}
